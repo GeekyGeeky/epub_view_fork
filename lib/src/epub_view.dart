@@ -368,8 +368,8 @@ class _EpubViewState extends State<EpubView> {
               padding: widget.paragraphPadding as EdgeInsets?,
             ).merge(Style.fromTextStyle(widget.textStyle)),
           },
-          customRender: {
-            'img': (context, child) {
+          customRenders: {
+            (context) => true: CustomRender.widget(widget: (context, child) {
               final url = context.tree.element!.attributes['src']!
                   .replaceAll('../', '');
               return Image(
@@ -378,8 +378,20 @@ class _EpubViewState extends State<EpubView> {
                       .controller._document!.Content!.Images![url]!.Content!),
                 ),
               );
-            }
+            })
           },
+          // customRender: {
+          //   'img': (context, child) {
+          //     final url = context.tree.element!.attributes['src']!
+          //         .replaceAll('../', '');
+          //     return Image(
+          //       image: MemoryImage(
+          //         Uint8List.fromList(widget
+          //             .controller._document!.Content!.Images![url]!.Content!),
+          //       ),
+          //     );
+          //   }
+          // },
         ),
       ],
     );
